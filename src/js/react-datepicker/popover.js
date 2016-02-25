@@ -1,7 +1,6 @@
-/** @jsx React.DOM */
-
-var React = require('react/addons');
-var Tether = require('tether/tether');
+var React = require('react');
+var ReactDOM = require('react-dom');
+var Tether = require('tether');
 
 
 var Popover = React.createClass({
@@ -54,7 +53,7 @@ var Popover = React.createClass({
   },
 
   _renderPopover: function() {
-    React.render(this._popoverComponent(), this._popoverElement);
+    ReactDOM.render(this._popoverComponent(), this._popoverElement);
 
     if (this._tether != null) {
       this._tether.setOptions(this._tetherOptions());

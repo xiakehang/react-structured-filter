@@ -1,9 +1,6 @@
-/**
- * @jsx React.DOM
- */
-
-var React = window.React || require('react/addons');
+var React = require('react');
 var TypeaheadOption = require('./option');
+var classNames = require('classnames');
 
 /**
  * Container for the options rendered as part of the autocompletion process
@@ -42,7 +39,7 @@ var TypeaheadSelector = React.createClass({
       "typeahead-selector": true
     };
     classes[this.props.customClasses.results] = this.props.customClasses.results;
-    var classList = React.addons.classSet(classes);
+    var classList = classNames(classes);
 
     var results = this.props.options.map(function(result, i) {
       return (

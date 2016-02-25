@@ -1,9 +1,9 @@
 var React = require('react');
 var Griddle = require('griddle-react');
-var GriddleWithCallback = require('./GriddleWithCallback.jsx');
-var StructuredFilter = require('../src/main.jsx');
+var GriddleWithCallback = require('./GriddleWithCallback');
+var StructuredFilter = require('../src/js/main');
 
-var ExampleData = require('./ExampleData.jsx');
+var ExampleData = require('./ExampleData');
 
 var ExampleTable = React.createClass({
   getInitialState: function() {
@@ -14,7 +14,6 @@ var ExampleTable = React.createClass({
 
 
   getJsonData: function(filterString, sortColumn, sortAscending, page, pageSize, callback) {
-    thisComponent = this;
 
     if (filterString==undefined) {
       filterString = "";
@@ -24,7 +23,7 @@ var ExampleTable = React.createClass({
     }
 
     // Normally you would make a Reqwest here to the server
-    var results = this.refs.ExampleData.filter(filterString, sortColumn, sortAscending, page, pageSize);
+    var results = ExampleData.filter(filterString, sortColumn, sortAscending, page, pageSize);
     callback(results);
   },
 
@@ -36,15 +35,15 @@ var ExampleTable = React.createClass({
 
 
   getSymbolOptions: function() {
-    return this.refs.ExampleData.getSymbolOptions();
+    return ExampleData.getSymbolOptions();
   },
 
   getSectorOptions: function() {
-    return this.refs.ExampleData.getSectorOptions();
+    return ExampleData.getSectorOptions();
   },
 
   getIndustryOptions: function() {
-    return this.refs.ExampleData.getIndustryOptions();
+    return ExampleData.getIndustryOptions();
   },
 
 
@@ -74,7 +73,6 @@ var ExampleTable = React.createClass({
           getExternalResults={this.getJsonData} filter={this.state.filter}
           resultsPerPage={10}
         />
-        <ExampleData ref="ExampleData" />
       </div>
     )
   }

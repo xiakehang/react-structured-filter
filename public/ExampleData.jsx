@@ -1,5 +1,4 @@
-var React = require('react');
-var Taffy = require('./taffy-min.js').taffy;
+import Taffy from './taffy-min';
 
 
 /*******************************************************************************
@@ -8,10 +7,9 @@ var Taffy = require('./taffy-min.js').taffy;
  * You should query a server.  This is purely for demo purposes.
  ******************************************************************************/
 
-var ExampleData = React.createClass({
-  componentWillMount: function() {
+var ExampleData = {
     // Create instance variable of static data
-    this.db = Taffy([
+    db: Taffy([
       {"Symbol":"TFSC", 	 "Name": "1347 Capital Corp.", 	 "Price": 9.43, 	 "MarketCap": 56090000, 	 "IPO":2014, 		 "Sector":"Finance", 	 "Industry":"Business Services"},
       {"Symbol":"PIH", 	 "Name": "1347 Property Insurance Holdings, Inc.", 	 "Price": 7.64, 	 "MarketCap": 48580000, 	 "IPO":2014, 		 "Sector":"Finance", 	 "Industry":"Property-Casualty Insurers"},
       {"Symbol":"FLWS", 	 "Name": "1-800 FLOWERS.COM, Inc.", 	 "Price": 10.33, 	 "MarketCap": 668420000, 	 "IPO":1999, 		 "Sector":"Consumer Services", 	 "Industry":"Other Specialty Stores"},
@@ -1259,14 +1257,16 @@ var ExampleData = React.createClass({
       {"Symbol":"ZU", 	 "Name": "zulily, inc.", 	 "Price": 14.22, 	 "MarketCap": 1780000000, 	 "IPO":2013, 		 "Sector":"Consumer Services", 	 "Industry":"Catalog/Specialty Distribution"},
       {"Symbol":"ZUMZ", 	 "Name": "Zumiez Inc.", 	 "Price": 38.84, 	 "MarketCap": 1140000000, 	 "IPO":2005, 		 "Sector":"Consumer Services", 	 "Industry":"Clothing/Shoe/Accessory Stores"},
       {"Symbol":"ZNGA", 	 "Name": "Zynga Inc.", 	 "Price": 2.24, 	 "MarketCap": 2020000000, 	 "IPO":2011, 		 "Sector":"Technology", 	 "Industry":"EDP Services"}
-    ]);
-  },
+    ])
+  ,
 
   filter: function(filterString, sortColumn, sortAscending, page, pageSize) {
     console.log("Filter: "+filterString);
 
     // Apply filters
-    var filteredData = this.db();
+    var filteredData = this.db(),
+        i, 
+        filter;
 
     if (filterString != "") {
       var filterArray = JSON.parse(filterString);
@@ -1411,11 +1411,7 @@ var ExampleData = React.createClass({
 
   getIndustryOptions: function() {
     return this.db().distinct("Industry");
-  },
-
-  render: function() {
-    return (<div/>);
   }
-});
+};
 
 module.exports = ExampleData;

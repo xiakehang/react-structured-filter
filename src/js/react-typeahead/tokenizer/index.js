@@ -1,11 +1,8 @@
-/**
- * @jsx React.DOM
- */
-
-var React = window.React || require('react');
+var React = require('react');
 var Token = require('./token');
 var KeyEvent = require('../keyevent');
 var Typeahead = require('../typeahead');
+var classNames = require('classnames');
 
 /**
  * A typeahead that, when an option is selected, instead of simply filling
@@ -48,9 +45,9 @@ var TypeaheadTokenizer = React.createClass({
   _renderTokens: function() {
     var tokenClasses = {}
     tokenClasses[this.props.customClasses.token] = !!this.props.customClasses.token;
-    var classList = React.addons.classSet(tokenClasses);
+    var classList = classNames(tokenClasses);
     var result = this.state.selected.map(function(selected) {
-      mykey = selected.category + selected.operator + selected.value;
+      var mykey = selected.category + selected.operator + selected.value;
 
       return (
         <Token key={mykey} className={classList}
@@ -64,6 +61,8 @@ var TypeaheadTokenizer = React.createClass({
   },
 
   _getOptionsForTypeahead: function() {
+    var categoryType;
+
     if (this.state.category=="") {
       var categories=[];
       for (var i = 0; i < this.props.options.length; i++) {
@@ -100,6 +99,8 @@ var TypeaheadTokenizer = React.createClass({
   },
 
   _getCategoryType: function() {
+    var categoryType;
+
     for (var i = 0; i < this.props.options.length; i++) {
       if (this.props.options[i].category == this.state.category) {
         categoryType = this.props.options[i].type;
@@ -198,7 +199,7 @@ var TypeaheadTokenizer = React.createClass({
   render: function() {
     var classes = {}
     classes[this.props.customClasses.typeahead] = !!this.props.customClasses.typeahead;
-    var classList = React.addons.classSet(classes);
+    var classList = classNames(classes);
     return (
       <div className="filter-tokenizer">
         <span className="input-group-addon">

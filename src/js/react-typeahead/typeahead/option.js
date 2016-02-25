@@ -1,8 +1,5 @@
-/**
- * @jsx React.DOM
- */
-
-var React = window.React || require('react/addons');
+var React = require('react'),
+    classNames = require('classnames');
 
 /**
  * A single option within the TypeaheadSelector
@@ -34,7 +31,7 @@ var TypeaheadOption = React.createClass({
       hover: this.props.hover
     }
     classes[this.props.customClasses.listItem] = !!this.props.customClasses.listItem;
-    var classList = React.addons.classSet(classes);
+    var classList = classNames(classes);
 
     return (
       <li className={classList} onClick={this._onClick}>
@@ -50,7 +47,7 @@ var TypeaheadOption = React.createClass({
       "typeahead-option": true,
     };
     classes[this.props.customClasses.listAnchor] = !!this.props.customClasses.listAnchor;
-    return React.addons.classSet(classes);
+    return classNames(classes);
   },
 
   _onClick: function() {

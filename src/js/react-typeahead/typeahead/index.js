@@ -1,13 +1,11 @@
-/**
- * @jsx React.DOM
- */
-
-var React = window.React || require('react/addons');
+var React = require('react');
+var ReactDOM = require('react-dom');
 var TypeaheadSelector = require('./selector');
 var KeyEvent = require('../keyevent');
 var fuzzy = require('fuzzy');
 var DatePicker = require('../../react-datepicker/datepicker.js');
 var moment = require('moment');
+var classNames = require('classnames');
 
 /**
  * A "typeahead", an auto-completing text input
@@ -85,7 +83,7 @@ var Typeahead = React.createClass({
 
   setEntryText: function(value) {
     if (this.refs.entry != null) {
-      this.refs.entry.getDOMNode().value = value;
+      ReactDOM.findDOMNode(this.refs.entry).value = value;
     }
     this._onTextEntryUpdated();
   },
@@ -114,7 +112,7 @@ var Typeahead = React.createClass({
   },
 
   _onOptionSelected: function(option) {
-    var nEntry = this.refs.entry.getDOMNode();
+    var nEntry = ReactDOM.findDOMNode(this.refs.entry);
     nEntry.focus();
     nEntry.value = option;
     this.setState({visible: this.getOptionsForValue(option, this.state.options),
@@ -127,7 +125,7 @@ var Typeahead = React.createClass({
   _onTextEntryUpdated: function() {
     var value = "";
     if (this.refs.entry != null) {
-      value = this.refs.entry.getDOMNode().value;
+      value = ReactDOM.findDOMNode(this.refs.entry).value;
     }
     this.setState({visible: this.getOptionsForValue(value, this.state.options),
                    selection: null,
@@ -236,13 +234,13 @@ var Typeahead = React.createClass({
   render: function() {
     var inputClasses = {}
     inputClasses[this.props.customClasses.input] = !!this.props.customClasses.input;
-    var inputClassList = React.addons.classSet(inputClasses)
+    var inputClassList = classNames(inputClasses)
 
     var classes = {
       typeahead: true
     }
     classes[this.props.className] = !!this.props.className;
-    var classList = React.addons.classSet(classes);
+    var classList = classNames(classes);
 
     if (this._showDatePicker()) {
       return (

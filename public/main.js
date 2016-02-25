@@ -1,8 +1,8 @@
-/** @jsx React.DOM */
 var React = require('react');
-var ExampleTable = require('./ExampleTable.jsx');
+var ReactDOM = require('react-dom');
+var ExampleTable = require('./ExampleTable');
 
-React.render(
+ReactDOM.render(
   <div className="container">
 
     <div className="navbar navbar-default">

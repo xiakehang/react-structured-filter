@@ -1,5 +1,4 @@
-/** @jsx React.DOM */
-var React = require('react/addons');
+var React = require('react');
 
 var Day = require('./day');
 var DateUtil = require('./util/date');

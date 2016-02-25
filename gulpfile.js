@@ -2,11 +2,15 @@
 
 
 var gulp = require('gulp');
+var gutil = require("gulp-util");
 var source = require('vinyl-source-stream'); // Used to stream bundle for further handling
 var browserify = require('browserify');
 var watchify = require('watchify');
 var reactify = require('reactify');
 var concat = require('gulp-concat');
+var webpack = require('webpack');
+var WebpackDevServer = require('webpack-dev-server');
+var webpackConfig = require('./webpack.config.dev');
 
 // This code is largely from: http://christianalfoni.github.io/javascript/2014/08/15/react-js-workflow.html
 gulp.task('browserify', function() {
@@ -36,5 +40,25 @@ gulp.task('browserify', function() {
 });
 
 
+gulp.task('dev', function(callback){
+
+   var compiler = webpack(webpackConfig);
+
+    new WebpackDevServer(compiler, {
+        // server and middleware options
+        contentBase: './public/demo',
+        publicPath: '/js/',
+    }).listen(8080, "localhost", function(err) {
+        if(err) throw new gutil.PluginError("webpack-dev-server", err);
+        // Server listening
+        gutil.log("[webpack-dev-server]", "http://localhost:8080/webpack-dev-server/index.html");
+
+        // keep the server alive or continue?
+        // callback();
+    });
+
+});
+
+
 // Just running the two tasks
-gulp.task('default', ['browserify']);
+gulp.task('default', ['dev']);

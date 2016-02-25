@@ -1,6 +1,4 @@
-/** @jsx React.DOM */
-
-var React = require('react/addons');
+var React = require('react');
 var moment = require('moment');
 
 var Day = React.createClass({
