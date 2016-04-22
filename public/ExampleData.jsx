@@ -1349,7 +1349,7 @@ var ExampleData = {
 
         // Filter IPO
         else if (filter.category == "IPO") {
-          year = filter.value.substring(0, 4);
+          var year = filter.value.substring(0, 4);
           if (filter.operator == "==") {
             filteredData = filteredData.filter({IPO:{'==':year}});
           } else if (filter.operator == "!=") {
