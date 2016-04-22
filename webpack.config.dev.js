@@ -16,6 +16,7 @@ module.exports = {
 			loader: 'babel',
 			query: {compact: false}
 		},
+		{ test: /\.css$/, loader: 'style-loader!css-loader' },
 		{
 			test: /taffy\-min/,
 			loader: 'exports?TAFFY'

@@ -3,9 +3,13 @@ var ReactDOM = require('react-dom');
 var TypeaheadSelector = require('./selector');
 var KeyEvent = require('../keyevent');
 var fuzzy = require('fuzzy');
-var DatePicker = require('../../react-datepicker/datepicker.js');
+// var DatePicker = require('../../react-datepicker/datepicker.js');
+var DatePicker = require('react-datepicker');
 var moment = require('moment');
 var classNames = require('classnames');
+
+
+require('react-datepicker/dist/react-datepicker.css');
 
 /**
  * A "typeahead", an auto-completing text input
@@ -245,7 +249,7 @@ var Typeahead = React.createClass({
     if (this._showDatePicker()) {
       return (
         <span ref="input" className={classList} onFocus={this._onFocus}>
-          <DatePicker ref="datepicker" dateFormat={"YYYY-MM-DD"} selected={moment()} onChange={this._handleDateChange} onKeyDown={this._onKeyDown}/>
+          <DatePicker showYearDropdown ref="datepicker" dateFormat={"YYYY-MM-DD"} selected={moment()} onChange={this._handleDateChange} onKeyDown={this._onKeyDown}/>
         </span>
       );
     }
