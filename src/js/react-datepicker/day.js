@@ -1,5 +1,6 @@
 var React = require('react');
 var moment = require('moment');
+var classNames = require('classnames');
 
 var Day = React.createClass({
   handleClick: function(event) {
@@ -9,7 +10,7 @@ var Day = React.createClass({
   },
 
   render: function() {
-    classes = React.addons.classSet({
+    var classes = classNames({
       'datepicker__day': true,
       'datepicker__day--disabled': this.props.disabled,
       'datepicker__day--selected': this.props.day.sameDay(this.props.selected),

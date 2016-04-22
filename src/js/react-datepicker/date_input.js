@@ -1,4 +1,5 @@
 var React = require('react');
+var ReactDOM = require('react-dom');
 var moment = require('moment');
 
 
@@ -37,7 +38,7 @@ var DateInput = React.createClass({
     if (focus) {
       ReactDOM.findDOMNode(this.refs.entry).focus();
     } else {
-      ReactDOM.findDOMNode(this.refs.entry).blue();
+      ReactDOM.findDOMNode(this.refs.entry).blur();
     }
   },
 
