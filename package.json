@@ -1,8 +1,14 @@
 {
   "name": "react-structured-filter",
   "version": "1.0.0",
-  "description": "",
-  "main": "gulpfile.js",
+  "description": "React component that provides autocomplete faceted search queries",
+  "main": "lib/main.js",
+  "author": "Josh Carr",
+  "homepage": "https://github.com/joshcarr/react-structured-filter",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joshcarr/react-structured-filter.git"
+  },
   "dependencies": {
     "classnames": "^2.2.3",
     "fuzzy": "^0.1.0",
@@ -56,6 +62,5 @@
     "prebuild": "npm run lint && npm run clean",
     "build": "NODE_ENV=production babel src --out-dir lib"
   },
-  "author": "Summit Route LLC",
   "license": "BSD"
 }
