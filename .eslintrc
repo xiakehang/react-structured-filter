@@ -1,0 +1,34 @@
+{
+  "extends": "airbnb",
+  "ecmaFeatures": {
+    "experimentalObjectRestSpread": true
+  },
+  "parser": "babel-eslint",
+  "rules": {
+    "space-in-parens": [1, "always", {
+      "exceptions": ["[]", "{}", "()", "empty"]
+    }],
+    "array-bracket-spacing": [1, "always", {
+      "objectsInArrays": true,
+      "arraysInArrays": true
+    }],
+    "computed-property-spacing": [1, "always"],
+    "id-length": 0,
+
+    "babel/generator-star-spacing": [1, "after"],
+    "babel/object-curly-spacing": [1, "always"],
+    "babel/object-shorthand": [1, "always"],
+    "babel/arrow-parens": [1, "as-needed"],
+
+    "react/jsx-curly-spacing": [1, "always"],
+    "react/no-multi-comp": 0,
+    "react/prefer-es6-class": 1,
+    "react/jsx-no-bind": [2, {
+      "ignoreRefs": true
+    }]
+  },
+  "plugins": [
+    "babel",
+    "react"
+  ]
+}

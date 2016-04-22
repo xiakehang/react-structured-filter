@@ -1,30 +1,77 @@
-var path = require('path');
+const path = require( 'path' );
+const webpack = require( 'webpack' );
 
 module.exports = {
-	context: __dirname + '/src',
-	entry: {
-		main: '../public/main'
-	},
-	output: {
-		path: path.resolve(__dirname, 'dist'),
-		filename: 'main.js'
-	},
-	module: {
-		loaders: [
-		{
-			test: /\.js|\.jsx/,
-			loader: 'babel',
-			query: {compact: false}
-		},
-		{ test: /\.css$/, loader: 'style-loader!css-loader' },
-		{
-			test: /taffy\-min/,
-			loader: 'exports?TAFFY'
-		}]
-	},
-	resolve: {
-		root: path.resolve('./'),
-		extensions: ['', '.js', '.jsx'],
-	}
-
-}
+  devtool: 'source-map',
+  entry: [
+    'webpack-hot-middleware/client?reload=true',
+    path.resolve( __dirname, 'example/src/main.js' ),
+  ],
+  output: {
+    path: path.resolve( __dirname, 'example/dist' ),
+    filename: 'bundle.js',
+    publicPath: '/assets/',
+  },
+  plugins: [
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin(),
+    new webpack.DefinePlugin({
+      __DEBUG__: true,
+    }),
+  ],
+  resolve: {
+    extensions: [ '', '.js', '.jsx' ],
+    alias: {
+      app: path.resolve( __dirname, 'example/src' ),
+      repo: path.resolve( __dirname ),
+    },
+  },
+  module: {
+    // comment out for now until we fix all the coding styles
+    // preLoaders: [
+    //   {
+    //     test: /\.(js|jsx)$/,
+    //     loader: 'eslint',
+    //     include: [
+    //       path.resolve( __dirname, 'src' ),
+    //       path.resolve( __dirname, 'example/src' ),
+    //     ],
+    //   },
+    // ],
+    loaders: [
+      {
+        test: /\.(js|jsx)$/,
+        loaders: [ 'babel' ],
+        include: [
+          path.resolve( __dirname, 'src' ),
+          path.resolve( __dirname, 'example/src' ),
+        ],
+      },
+      {
+        test: /taffy\-min/,
+        loader: 'exports?TAFFY',
+      },
+      {
+        test: /\.(less|css)$/,
+        loader: 'style!css!less',
+      },
+      {
+        test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url-loader?limit=10000&mimetype=application/font-woff',
+      },
+      {
+        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url-loader?limit=10000&mimetype=application/octet-stream',
+      },
+      {
+        test: /\.(eot|png)(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'file',
+      },
+      {
+        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url-loader?limit=10000&mimetype=image/svg+xml',
+      },
+    ],
+  },
+};

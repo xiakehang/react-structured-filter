@@ -2,6 +2,9 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var ExampleTable = require('./ExampleTable');
 
+require( './css/griddle.css' );
+require( './css/style.css' );
+
 ReactDOM.render(
   <div className="container">
 
