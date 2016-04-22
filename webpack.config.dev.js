@@ -49,10 +49,6 @@ module.exports = {
         ],
       },
       {
-        test: /taffy\-min/,
-        loader: 'exports?TAFFY',
-      },
-      {
         test: /\.(less|css)$/,
         loader: 'style!css!less',
       },

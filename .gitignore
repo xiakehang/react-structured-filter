@@ -1,2 +1,32 @@
+# Logs
+logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+# Coverage tools
+lib-cov
+coverage
+coverage.html
+.cover*
+
+# Dependency directory
 node_modules
-/example/demo/main.js
+
+# Example build directory
+example/dist
+example/node_modules
+.publish
+
+# Editor and other tmp files
+*.swp
+*.un~
+*.iml
+*.ipr
+*.iws
+*.sublime-*
+.idea/
+*.DS_Store
