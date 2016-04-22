@@ -3,7 +3,6 @@ var ReactDOM = require('react-dom');
 var TypeaheadSelector = require('./selector');
 var KeyEvent = require('../keyevent');
 var fuzzy = require('fuzzy');
-// var DatePicker = require('../../react-datepicker/datepicker.js');
 var DatePicker = require('react-datepicker');
 var moment = require('moment');
 var classNames = require('classnames');
