@@ -28,6 +28,8 @@ export default class TypeaheadSelector extends Component {
   constructor( ...args ) {
     super( ...args );
     this._onClick = this._onClick.bind( this );
+    this.navDown = this.navDown.bind( this );
+    this.navUp = this.navUp.bind( this );
   }
 
   state = {

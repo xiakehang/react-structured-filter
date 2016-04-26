@@ -56,6 +56,9 @@ class Typeahead extends Component {
     this._onFocus = this._onFocus.bind( this );
     this._onOptionSelected = this._onOptionSelected.bind( this );
     this._handleDateChange = this._handleDateChange.bind( this );
+    this._onEnter = this._onEnter.bind( this );
+    this._onEscape = this._onEscape.bind( this );
+    this._onTab = this._onTab.bind( this );
     // this._addTokenForValue = this._addTokenForValue.bind( this );
   }
 
