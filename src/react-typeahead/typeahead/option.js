@@ -1,59 +1,65 @@
-var React = require('react'),
-    classNames = require('classnames');
+import {
+  default as React,
+  Component,
+  PropTypes,
+} from 'react';
+import classNames from 'classnames';
 
 /**
  * A single option within the TypeaheadSelector
  */
-var TypeaheadOption = React.createClass({
-  propTypes: {
-    customClasses: React.PropTypes.object,
-    onClick: React.PropTypes.func,
-    children: React.PropTypes.string
-  },
+export default class TypeaheadOption extends Component {
+  static propTypes = {
+    customClasses: PropTypes.object,
+    onClick: PropTypes.func,
+    children: PropTypes.string,
+    hover: PropTypes.bool,
+  }
 
-  getDefaultProps: function() {
-    return {
-      customClasses: {},
-      onClick: function(event) { 
-        event.preventDefault(); 
-      }
+  static defaultProps = {
+    customClasses: {},
+    onClick( event ) {
+      event.preventDefault();
+    },
+  }
+
+  constructor( ...args ) {
+    super( ...args );
+    this._onClick = this._onClick.bind( this );
+  }
+
+  _getClasses() {
+    const classes = {
+      'typeahead-option': true,
     };
-  },
+    classes[ this.props.customClasses.listAnchor ] = !!this.props.customClasses.listAnchor;
+    return classNames( classes );
+  }
 
-  getInitialState: function() {
-    return {
-      hover: false
+  _onClick() {
+    return this.props.onClick();
+  }
+
+  render() {
+    const classes = {
+      hover: this.props.hover,
     };
-  },
-
-  render: function() {
-    var classes = {
-      hover: this.props.hover
-    }
-    classes[this.props.customClasses.listItem] = !!this.props.customClasses.listItem;
-    var classList = classNames(classes);
+    classes[ this.props.customClasses.listItem ] = !!this.props.customClasses.listItem;
+    const classList = classNames( classes );
 
     return (
-      <li className={classList} onClick={this._onClick}>
-        <a href="#" className={this._getClasses()} ref="anchor">
+      <li
+        className={ classList }
+        onClick={ this._onClick }
+      >
+        <a
+          href="#"
+          className={ this._getClasses() }
+          ref="anchor"
+        >
           { this.props.children }
         </a>
       </li>
     );
-  },
-
-  _getClasses: function() {
-    var classes = {
-      "typeahead-option": true,
-    };
-    classes[this.props.customClasses.listAnchor] = !!this.props.customClasses.listAnchor;
-    return classNames(classes);
-  },
-
-  _onClick: function() {
-    return this.props.onClick();
   }
-});
-
-
-module.exports = TypeaheadOption;
+}
