@@ -1,3 +1,3 @@
-import Tokenizer from './react-typeahead/tokenizer';
+import Tokenizer from './tokenizer';
 
 module.exports = Tokenizer;
