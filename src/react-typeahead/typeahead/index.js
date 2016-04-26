@@ -1,4 +1,4 @@
-/* eslint eqeqeq: ["error", "allow-null"] */
+/* eslint eqeqeq: [2, "allow-null"] */
 
 import {
   default as React,

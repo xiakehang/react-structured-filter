@@ -93,7 +93,10 @@ export default class Tokenizer extends Component {
         return [ '==', '!=', '<', '<=', '>', '>=' ];
       }
 
+      /* eslint-disable no-console */
       console.warn( `WARNING: Unknown category type in tokenizer: "${categoryType}"` );
+      /* eslint-enable no-console */
+
       return [];
     }
     const options = this._getCategoryOptions();
