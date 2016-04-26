@@ -62,6 +62,7 @@
     "example:build": "npm run example:clean && npm run example:build:webpack && npm run example:copy:static",
     "example:start": "node devServer.js",
     "lint": "eslint src",
+    "lint:fix": "eslint --fix src",
     "clean": "rimraf lib",
     "prebuild": "npm run lint && npm run clean",
     "build": "NODE_ENV=production babel src --out-dir lib"
