@@ -1,14 +1,22 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var TypeaheadSelector = require('./selector');
-var KeyEvent = require('../keyevent');
-var fuzzy = require('fuzzy');
-var DatePicker = require('react-datepicker');
-var moment = require('moment');
-var classNames = require('classnames');
+/* eslint eqeqeq: ["error", "allow-null"] */
 
+import {
+  default as React,
+  Component,
+  PropTypes,
+} from 'react';
+import ReactDOM from 'react-dom';
+import classNames from 'classnames';
+import moment from 'moment';
+import fuzzy from 'fuzzy';
+import DatePicker from 'react-datepicker';
 
-require('react-datepicker/dist/react-datepicker.css');
+import listensToClickOutside from 'react-onclickoutside/decorator';
+
+import TypeaheadSelector from './selector';
+import KeyEvent from '../keyevent';
+
+import 'react-datepicker/dist/react-datepicker.css';
 
 /**
  * A "typeahead", an auto-completing text input
@@ -16,254 +24,285 @@ require('react-datepicker/dist/react-datepicker.css');
  * Renders an text input that shows options nearby that you can use the
  * keyboard or mouse to select.  Requires CSS for MASSIVE DAMAGE.
  */
-var Typeahead = React.createClass({
-  propTypes: {
-    customClasses: React.PropTypes.object,
-    maxVisible: React.PropTypes.number,
-    options: React.PropTypes.array,
-    header: React.PropTypes.string,
-    datatype: React.PropTypes.string,
-    defaultValue: React.PropTypes.string,
-    placeholder: React.PropTypes.string,
-    onOptionSelected: React.PropTypes.func,
-    onKeyDown: React.PropTypes.func
-  },
+class Typeahead extends Component {
+  static propTypes = {
+    customClasses: PropTypes.object,
+    maxVisible: PropTypes.number,
+    options: PropTypes.array,
+    header: PropTypes.string,
+    datatype: PropTypes.string,
+    defaultValue: PropTypes.string,
+    placeholder: PropTypes.string,
+    onOptionSelected: PropTypes.func,
+    onKeyDown: PropTypes.func,
+    className: PropTypes.string,
+  }
 
-  mixins: [
-    require('react-onclickoutside')
-  ],
+  static defaultProps = {
+    options: [],
+    header: 'Category',
+    datatype: 'text',
+    customClasses: {},
+    defaultValue: '',
+    placeholder: '',
+    onKeyDown() { return; },
+    onOptionSelected() { },
+  }
 
-  getDefaultProps: function() {
-    return {
-      options: [],
-      header: "Category",
-      datatype: "text",
-      customClasses: {},
-      defaultValue: "",
-      placeholder: "",
-      onKeyDown: function(event) { return },
-      onOptionSelected: function(option) { }
-    };
-  },
+  constructor( ...args ) {
+    super( ...args );
+    this._onTextEntryUpdated = this._onTextEntryUpdated.bind( this );
+    this._onKeyDown = this._onKeyDown.bind( this );
+    this._onFocus = this._onFocus.bind( this );
+    this._onOptionSelected = this._onOptionSelected.bind( this );
+    this._handleDateChange = this._handleDateChange.bind( this );
+    // this._addTokenForValue = this._addTokenForValue.bind( this );
+  }
 
-  getInitialState: function() {
-    return {
-      // The set of all options... Does this need to be state?  I guess for lazy load...
-      options: this.props.options,
-      header: this.props.header,
-      datatype: this.props.datatype,
+  state = {
+    // The set of all options... Does this need to be state?  I guess for lazy load...
+    options: this.props.options,
+    header: this.props.header,
+    datatype: this.props.datatype,
 
-      focused: false,
+    focused: false,
 
-      // The currently visible set of options
-      visible: this.getOptionsForValue(this.props.defaultValue, this.props.options),
+    // The currently visible set of options
+    visible: this.getOptionsForValue( this.props.defaultValue, this.props.options ),
 
-      // This should be called something else, "entryValue"
-      entryValue: this.props.defaultValue,
+    // This should be called something else, "entryValue"
+    entryValue: this.props.defaultValue,
 
-      // A valid typeahead value
-      selection: null
-    };
-  },
+    // A valid typeahead value
+    selection: null,
+  }
 
-  componentWillReceiveProps: function(nextProps) {
-    this.setState({options: nextProps.options,
+  componentWillReceiveProps( nextProps ) {
+    this.setState({
+      options: nextProps.options,
       header: nextProps.header,
       datatype: nextProps.datatype,
-      visible: nextProps.options});
-  },
-
-  getOptionsForValue: function(value, options) {
-    var result = fuzzy.filter(value, options).map(function(res) {
-      return res.string;
+      visible: nextProps.options,
     });
+  }
 
-    if (this.props.maxVisible) {
-      result = result.slice(0, this.props.maxVisible);
+  getOptionsForValue( value, options ) {
+    let result = fuzzy
+      .filter( value, options )
+      .map( res => res.string );
+
+    if ( this.props.maxVisible ) {
+      result = result.slice( 0, this.props.maxVisible );
     }
     return result;
-  },
+  }
 
-  setEntryText: function(value) {
-    if (this.refs.entry != null) {
-      ReactDOM.findDOMNode(this.refs.entry).value = value;
+  setEntryText( value ) {
+    if ( this.refs.entry != null ) {
+      ReactDOM.findDOMNode( this.refs.entry ).value = value;
     }
     this._onTextEntryUpdated();
-  },
+  }
 
-  _renderIncrementalSearchResults: function() {
-    if (!this.state.focused) {
-      return "";
+  _renderIncrementalSearchResults() {
+    if ( !this.state.focused ) {
+      return '';
     }
 
     // Something was just selected
-    if (this.state.selection) {
-      return "";
+    if ( this.state.selection ) {
+      return '';
     }
 
     // There are no typeahead / autocomplete suggestions
-    if (!this.state.visible.length) {
-      return "";
+    if ( !this.state.visible.length ) {
+      return '';
     }
 
     return (
       <TypeaheadSelector
-        ref="sel" options={ this.state.visible } header={this.state.header}
+        ref="sel"
+        options={ this.state.visible }
+        header={ this.state.header }
         onOptionSelected={ this._onOptionSelected }
-        customClasses={this.props.customClasses} />
+        customClasses={ this.props.customClasses }
+      />
     );
-  },
+  }
 
-  _onOptionSelected: function(option) {
-    var nEntry = ReactDOM.findDOMNode(this.refs.entry);
+  _onOptionSelected( option ) {
+    const nEntry = ReactDOM.findDOMNode( this.refs.entry );
     nEntry.focus();
     nEntry.value = option;
-    this.setState({visible: this.getOptionsForValue(option, this.state.options),
-                   selection: option,
-                   entryValue: option});
+    this.setState({
+      visible: this.getOptionsForValue( option, this.state.options ),
+      selection: option,
+      entryValue: option,
+    });
 
-    this.props.onOptionSelected(option);
-  },
+    this.props.onOptionSelected( option );
+  }
 
-  _onTextEntryUpdated: function() {
-    var value = "";
-    if (this.refs.entry != null) {
-      value = ReactDOM.findDOMNode(this.refs.entry).value;
+  _onTextEntryUpdated() {
+    let value = '';
+    if ( this.refs.entry != null ) {
+      value = ReactDOM.findDOMNode( this.refs.entry ).value;
     }
-    this.setState({visible: this.getOptionsForValue(value, this.state.options),
-                   selection: null,
-                   entryValue: value});
-  },
+    this.setState({
+      visible: this.getOptionsForValue( value, this.state.options ),
+      selection: null,
+      entryValue: value,
+    });
+  }
 
-  _onEnter: function(event) {
-    if (!this.refs.sel.state.selection) {
-      return this.props.onKeyDown(event);
+  _onEnter( event ) {
+    if ( !this.refs.sel.state.selection ) {
+      return this.props.onKeyDown( event );
     }
 
-    this._onOptionSelected(this.refs.sel.state.selection);
-  },
+    this._onOptionSelected( this.refs.sel.state.selection );
+  }
 
-  _onEscape: function() {
-    this.refs.sel.setSelectionIndex(null)
-  },
+  _onEscape() {
+    this.refs.sel.setSelectionIndex( null );
+  }
 
-  _onTab: function(event) {
-    var option = this.refs.sel.state.selection ?
-      this.refs.sel.state.selection : this.state.visible[0];
-    this._onOptionSelected(option)
-  },
+  _onTab() {
+    const option = this.refs.sel.state.selection ?
+      this.refs.sel.state.selection : this.state.visible[ 0 ];
+    this._onOptionSelected( option );
+  }
 
-  eventMap: function(event) {
-    var events = {};
+  eventMap() {
+    const events = {};
 
-    events[KeyEvent.DOM_VK_UP] = this.refs.sel.navUp;
-    events[KeyEvent.DOM_VK_DOWN] = this.refs.sel.navDown;
-    events[KeyEvent.DOM_VK_RETURN] = events[KeyEvent.DOM_VK_ENTER] = this._onEnter;
-    events[KeyEvent.DOM_VK_ESCAPE] = this._onEscape;
-    events[KeyEvent.DOM_VK_TAB] = this._onTab;
+    events[ KeyEvent.DOM_VK_UP ] = this.refs.sel.navUp;
+    events[ KeyEvent.DOM_VK_DOWN ] = this.refs.sel.navDown;
+    events[ KeyEvent.DOM_VK_RETURN ] = events[ KeyEvent.DOM_VK_ENTER ] = this._onEnter;
+    events[ KeyEvent.DOM_VK_ESCAPE ] = this._onEscape;
+    events[ KeyEvent.DOM_VK_TAB ] = this._onTab;
 
     return events;
-  },
+  }
 
-  _onKeyDown: function(event) {
+  _onKeyDown( event ) {
     // If Enter pressed
-    if (event.keyCode === KeyEvent.DOM_VK_RETURN || event.keyCode === KeyEvent.DOM_VK_ENTER) {
+    if ( event.keyCode === KeyEvent.DOM_VK_RETURN || event.keyCode === KeyEvent.DOM_VK_ENTER ) {
       // If no options were provided so we can match on anything
-      if (this.props.options.length===0) {
-        this._onOptionSelected(this.state.entryValue);
+      if ( this.props.options.length === 0 ) {
+        this._onOptionSelected( this.state.entryValue );
       }
 
       // If what has been typed in is an exact match of one of the options
-      if (this.props.options.indexOf(this.state.entryValue) > -1) {
-        this._onOptionSelected(this.state.entryValue);
+      if ( this.props.options.indexOf( this.state.entryValue ) > -1 ) {
+        this._onOptionSelected( this.state.entryValue );
       }
     }
 
     // If there are no visible elements, don't perform selector navigation.
     // Just pass this up to the upstream onKeydown handler
-    if (!this.refs.sel) {
-      return this.props.onKeyDown(event);
+    if ( !this.refs.sel ) {
+      return this.props.onKeyDown( event );
     }
 
-    var handler = this.eventMap()[event.keyCode];
+    const handler = this.eventMap()[ event.keyCode ];
 
-    if (handler) {
-      handler(event);
+    if ( handler ) {
+      handler( event );
     } else {
-      return this.props.onKeyDown(event);
+      return this.props.onKeyDown( event );
     }
     // Don't propagate the keystroke back to the DOM/browser
     event.preventDefault();
-  },
+  }
 
-  _onFocus: function(event) {
-    this.setState({focused: true});
-  },
+  _onFocus() {
+    this.setState({ focused: true });
+  }
 
-  handleClickOutside: function(event) {
-    this.setState({focused:false});
-  },
+  handleClickOutside() {
+    this.setState({ focused: false });
+  }
 
-  isDescendant: function(parent, child) {
-     var node = child.parentNode;
-     while (node != null) {
-         if (node == parent) {
-             return true;
-         }
-         node = node.parentNode;
-     }
-     return false;
-  },
+  isDescendant( parent, child ) {
+    let node = child.parentNode;
+    while ( node !== null ) {
+      if ( node === parent ) {
+        return true;
+      }
+      node = node.parentNode;
+    }
+    return false;
+  }
 
-  _handleDateChange: function(date) {
-    this.props.onOptionSelected(date.format("YYYY-MM-DD"));
-  },
+  _handleDateChange( date ) {
+    this.props.onOptionSelected( date.format( 'YYYY-MM-DD' ));
+  }
 
-  _showDatePicker: function() {
-    if (this.state.datatype == "date") {
+  _showDatePicker() {
+    if ( this.state.datatype === 'date' ) {
       return true;
     }
     return false;
-  },
+  }
 
-  inputRef: function() {
-    if (this._showDatePicker()) {
+  inputRef() {
+    if ( this._showDatePicker()) {
       return this.refs.datepicker.refs.dateinput.refs.entry;
-    } else {
-      return this.refs.entry;
     }
-  },
 
-  render: function() {
-    var inputClasses = {}
-    inputClasses[this.props.customClasses.input] = !!this.props.customClasses.input;
-    var inputClassList = classNames(inputClasses)
+    return this.refs.entry;
+  }
 
-    var classes = {
-      typeahead: true
-    }
-    classes[this.props.className] = !!this.props.className;
-    var classList = classNames(classes);
+  render() {
+    const inputClasses = {};
+    inputClasses[ this.props.customClasses.input ] = !!this.props.customClasses.input;
+    const inputClassList = classNames( inputClasses );
 
-    if (this._showDatePicker()) {
+    const classes = {
+      typeahead: true,
+    };
+    classes[ this.props.className ] = !!this.props.className;
+    const classList = classNames( classes );
+
+    if ( this._showDatePicker()) {
       return (
-        <span ref="input" className={classList} onFocus={this._onFocus}>
-          <DatePicker showYearDropdown ref="datepicker" dateFormat={"YYYY-MM-DD"} selected={moment()} onChange={this._handleDateChange} onKeyDown={this._onKeyDown}/>
+        <span
+          ref="input"
+          className={ classList }
+          onFocus={ this._onFocus }
+        >
+          <DatePicker
+            showYearDropdown
+            ref="datepicker"
+            dateFormat={ "YYYY-MM-DD" }
+            selected={ moment() }
+            onChange={ this._handleDateChange }
+            onKeyDown={ this._onKeyDown }
+          />
         </span>
       );
     }
 
     return (
-      <span ref="input" className={classList} onFocus={this._onFocus}>
-        <input ref="entry" type="text"
-          placeholder={this.props.placeholder}
-          className={inputClassList} defaultValue={this.state.entryValue}
-          onChange={this._onTextEntryUpdated} onKeyDown={this._onKeyDown}
-          />
+      <span
+        ref="input"
+        className={ classList }
+        onFocus={ this._onFocus }
+      >
+        <input
+          ref="entry"
+          type="text"
+          placeholder={ this.props.placeholder }
+          className={ inputClassList }
+          defaultValue={ this.state.entryValue }
+          onChange={ this._onTextEntryUpdated }
+          onKeyDown={ this._onKeyDown }
+        />
         { this._renderIncrementalSearchResults() }
       </span>
     );
   }
-});
+}
 
-module.exports = Typeahead;
+export default listensToClickOutside( Typeahead );

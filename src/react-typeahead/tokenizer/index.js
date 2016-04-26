@@ -139,7 +139,7 @@ export default class Tokenizer extends Component {
 
     // Remove token ONLY when bksp pressed at beginning of line
     // without a selection
-    const entry = ReactDOM.findDOMNode( this.refs.typeahead.inputRef());
+    const entry = ReactDOM.findDOMNode( this.refs.typeahead.refs.inner.inputRef());
     if ( entry.selectionStart === entry.selectionEnd &&
         entry.selectionStart === 0 ) {
       if ( this.state.operator !== '' ) {
@@ -175,13 +175,13 @@ export default class Tokenizer extends Component {
   _addTokenForValue( value ) {
     if ( this.state.category === '' ) {
       this.setState({ category: value });
-      this.refs.typeahead.setEntryText( '' );
+      this.refs.typeahead.refs.inner.setEntryText( '' );
       return;
     }
 
     if ( this.state.operator === '' ) {
       this.setState({ operator: value });
-      this.refs.typeahead.setEntryText( '' );
+      this.refs.typeahead.refs.inner.setEntryText( '' );
       return;
     }
 
@@ -193,7 +193,7 @@ export default class Tokenizer extends Component {
 
     this.state.selected.push( newValue );
     this.setState({ selected: this.state.selected });
-    this.refs.typeahead.setEntryText( '' );
+    this.refs.typeahead.refs.inner.setEntryText( '' );
     this.props.onTokenAdd( this.state.selected );
 
     this.setState({
