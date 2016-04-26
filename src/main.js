@@ -1,4 +1,3 @@
-var React = require('react');
-var StructuredFilter = require('./react-typeahead/react-typeahead.js').Tokenizer;
+import Tokenizer from './react-typeahead/tokenizer';
 
-module.exports = StructuredFilter;
+module.exports = Tokenizer;
