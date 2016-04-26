@@ -14,7 +14,7 @@
     "fuzzy": "^0.1.0",
     "moment": "*",
     "react-datepicker": "^0.25.0",
-    "react-onclickoutside": "^4.5.0"
+    "react-onclickoutside": "^4.9.0"
   },
   "devDependencies": {
     "babel-cli": "^6.7.5",
