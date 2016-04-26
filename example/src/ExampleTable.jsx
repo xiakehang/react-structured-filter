@@ -3,6 +3,8 @@ var Griddle = require('griddle-react');
 var GriddleWithCallback = require('./GriddleWithCallback');
 var StructuredFilter = require('../../src/main');
 
+require('../../src/react-structured-filter.css');
+
 var ExampleData = require('./ExampleData');
 
 var ExampleTable = React.createClass({
