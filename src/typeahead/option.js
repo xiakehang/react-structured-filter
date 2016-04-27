@@ -37,7 +37,8 @@ export default class TypeaheadOption extends Component {
     return classNames( classes );
   }
 
-  _onClick() {
+  _onClick( event ) {
+    event.preventDefault();
     return this.props.onClick( this.props.result );
   }
 
@@ -49,12 +50,10 @@ export default class TypeaheadOption extends Component {
     const classList = classNames( classes );
 
     return (
-      <li
-        className={ classList }
-        onClick={ this._onClick }
-      >
+      <li className={ classList } >
         <a
           href="#"
+          onClick={ this._onClick }
           className={ this._getClasses() }
           ref="anchor"
         >
