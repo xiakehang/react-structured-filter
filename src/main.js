@@ -1,3 +1,3 @@
 import Tokenizer from './tokenizer';
 
-export default Tokenizer;
+module.exports = Tokenizer;
