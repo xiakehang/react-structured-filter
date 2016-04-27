@@ -13,14 +13,6 @@
   padding-bottom:0;
 }
 
-.filter-tokenizer .input-group-addon {
-  border: 0px;
-  border-right: 1px solid #ccc;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-  display: table-cell;
-}
-
 .filter-tokenizer .token-collection {
   display: table-cell;
 }

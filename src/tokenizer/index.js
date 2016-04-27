@@ -224,9 +224,6 @@ export default class Tokenizer extends Component {
     const classList = classNames( classes );
     return (
       <div className="filter-tokenizer">
-        <span className="input-group-addon">
-          <i className="fa fa-search"></i>
-        </span>
         <div className="token-collection">
           { this._renderTokens() }
 
