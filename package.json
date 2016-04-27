@@ -40,6 +40,7 @@
     "less": "^2.6.0",
     "less-loader": "^2.2.1",
     "react": "^0.14.0",
+    "react-docgen": "^2.8.2",
     "react-dom": "^0.14.0",
     "react-transform-catch-errors": "^1.0.2",
     "react-transform-hmr": "^1.0.2",
@@ -66,7 +67,8 @@
     "lint:fix": "eslint --fix src",
     "clean": "rimraf lib",
     "prebuild": "npm run lint && npm run clean",
-    "build": "NODE_ENV=production babel src --out-dir lib && cp src/react-structured-filter.css lib/react-structured-filter.css"
+    "build": "NODE_ENV=production babel src --out-dir lib && cp src/react-structured-filter.css lib/react-structured-filter.css",
+    "docs": "cd docs && react-docgen ../src/tokenizer/index.js | ./buildDocs.sh"
   },
   "license": "BSD"
 }

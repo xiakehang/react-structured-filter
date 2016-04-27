@@ -19,17 +19,26 @@ process.stdin.on('readable', function() {
 });
 
 process.stdin.on('end', function() {
-  buildDocs(JSON.parse(json));
+  buildDocs( JSON.parse( json ));
 });
 
+function buildDoc( filepath, doc ) {
+  var name = getComponentName(filepath);
+  var markdown = generateMarkdown(name, doc );
+  fs.writeFileSync(name + '.md', markdown);
+  process.stdout.write(filepath + ' -> ' + name + '.md\n');
+}
+
 function buildDocs(api) {
-  // api is an object keyed by filepath. We use the file name as component name.
-  for (var filepath in api) {
-    var name = getComponentName(filepath);
-    var markdown = generateMarkdown(name, api[filepath]);
-    fs.writeFileSync(name + '.md', markdown);
-    process.stdout.write(filepath + ' -> ' + name + '.md\n');
+  if ( api.hasOwnProperty( 'description' )) {
+    buildDoc( 'index', api );
+  } else {
+    // api is an object keyed by filepath. We use the file name as component name.
+    for (var filepath in api) {
+      buildDoc( filepath, api[filepath] );
+    }
   }
+
 }
 
 function getComponentName(filepath) {
