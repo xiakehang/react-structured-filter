@@ -70,6 +70,18 @@ var ExampleTable = React.createClass({
           }}
           onTokenAdd={this.updateFilter}
           onTokenRemove={this.updateFilter}
+          defaultSelected={[
+            {
+              category: 'Industry',
+              operator: '==',
+              value: 'Books',
+            },
+            {
+              category: 'IPO',
+              operator: '<',
+              value: '1999-12-31',
+            },
+          ]}
         />
         <GriddleWithCallback
           getExternalResults={this.getJsonData} filter={this.state.filter}
