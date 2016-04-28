@@ -84,11 +84,67 @@ export default class Tokenizer extends Component {
      *     ]
      */
     options: PropTypes.array,
+
+    /**
+     * An object containing custom class names for child elements. Useful for
+     * integrating with 3rd party UI kits. Allowed Keys: `input`, `results`,
+     * `listItem`, `listAnchor`, `typeahead`, `hover`
+     *
+     * Example:
+     *
+     *     {
+     *       input: 'filter-tokenizer-text-input',
+     *       results: 'filter-tokenizer-list__container',
+     *       listItem: 'filter-tokenizer-list__item'
+     *     }
+     */
     customClasses: PropTypes.object,
+
+    /**
+     * A set of values of tokens to be loaded on first render. Each token should
+     * be an object with a `category`, `operator`, and `value` key.
+     *
+     * Example:
+     *
+     *     [
+     *       {
+     *         category: 'Industry',
+     *         operator: '==',
+     *         value: 'Books',
+     *       },
+     *       {
+     *         category: 'IPO',
+     *         operator: '<',
+     *         value: '1999-12-31',
+     *       },
+     *       {
+     *         category: 'Name',
+     *         operator: 'contains',
+     *         value: 'Nabokov',
+     *       },
+     *     ]
+     */
     defaultSelected: PropTypes.array,
+
+    /**
+     * A default value used when the component has no value. If it matches any
+     * options a option list will show.
+     */
     defaultValue: PropTypes.string,
+
+    /**
+     * Placeholder text for the typeahead input.
+     */
     placeholder: PropTypes.string,
+
+    /**
+     * Event handler triggered whenever a token is removed. Params: `(removedToken)`
+     */
     onTokenRemove: PropTypes.func,
+
+    /**
+     * Event handler triggered whenever a token is added. Params: `(addedToken)`
+     */
     onTokenAdd: PropTypes.func,
   }
 

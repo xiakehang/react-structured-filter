@@ -22,11 +22,46 @@ Props
 
 ### `customClasses`
 
+An object containing custom class names for child elements. Useful for
+integrating with 3rd party UI kits. Allowed Keys: `input`, `results`,
+`listItem`, `listAnchor`, `typeahead`, `hover`
+
+Example:
+
+    {
+      input: 'filter-tokenizer-text-input',
+      results: 'filter-tokenizer-list__container',
+      listItem: 'filter-tokenizer-list__item'
+    }
+
 type: `object`  
 defaultValue: `{}`  
 
 
 ### `defaultSelected`
+
+A set of values of tokens to be loaded on first render. Each token should
+be an object with a `category`, `operator`, and `value` key.
+
+Example:
+
+    [
+      {
+        category: 'Industry',
+        operator: '==',
+        value: 'Books',
+      },
+      {
+        category: 'IPO',
+        operator: '<',
+        value: '1999-12-31',
+      },
+      {
+        category: 'Name',
+        operator: 'contains',
+        value: 'Nabokov',
+      },
+    ]
 
 type: `array`  
 defaultValue: `[]`  
@@ -34,17 +69,24 @@ defaultValue: `[]`
 
 ### `defaultValue`
 
+A default value used when the component has no value. If it matches any
+options a option list will show.
+
 type: `string`  
 defaultValue: `''`  
 
 
 ### `onTokenAdd`
 
+Event handler triggered whenever a token is added. Params: `(addedToken)`
+
 type: `func`  
 defaultValue: `function() {}`  
 
 
 ### `onTokenRemove`
+
+Event handler triggered whenever a token is removed. Params: `(removedToken)`
 
 type: `func`  
 defaultValue: `function() {}`  
@@ -99,6 +141,8 @@ defaultValue: `[]`
 
 
 ### `placeholder`
+
+Placeholder text for the typeahead input.
 
 type: `string`  
 defaultValue: `''`  
