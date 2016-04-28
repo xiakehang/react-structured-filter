@@ -9,17 +9,6 @@ import KeyEvent from '../keyevent';
 import Typeahead from '../typeahead';
 import classNames from 'classnames';
 
-function _arraysAreDifferent( array1, array2 ) {
-  if ( array1.length !== array2.length ) {
-    return true;
-  }
-  for ( let i = array2.length - 1; i >= 0; i-- ) {
-    if ( array2[ i ] !== array1[ i ]) {
-      return true;
-    }
-  }
-}
-
 /**
  * A typeahead that, when an option is selected, instead of simply filling
  * the text entry widget, prepends a renderable "token", that may be deleted
@@ -174,15 +163,6 @@ export default class Tokenizer extends Component {
 
   componentDidMount() {
     this.props.onTokenAdd( this.state.selected );
-  }
-
-  componentWillReceiveProps( nextProps ) {
-    // if we get new defaultProps, update selected
-    if ( _arraysAreDifferent( this.props.defaultSelected, nextProps.defaultSelected )) {
-      this.setState({
-        selected: nextProps.defaultSelected.slice( 0 ),
-      });
-    }
   }
 
   _renderTokens() {
