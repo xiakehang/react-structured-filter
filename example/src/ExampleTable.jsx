@@ -79,7 +79,7 @@ var ExampleTable = React.createClass({
             {
               category: 'IPO',
               operator: '<',
-              value: '1999-12-31',
+              value: 'Dec 12, 1990 12:00 AM',
             },
           ]}
         />

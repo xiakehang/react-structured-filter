@@ -9,14 +9,15 @@ import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 import moment from 'moment';
 import fuzzy from 'fuzzy';
-import DatePicker from 'react-datepicker';
-
+// import DatePicker from 'react-datepicker';
+import Datetime from 'react-datetime';
+import 'react-datetime/css/react-datetime.css';
 import listensToClickOutside from 'react-onclickoutside/decorator';
 
 import TypeaheadSelector from './selector';
 import KeyEvent from '../keyevent';
 
-import 'react-datepicker/dist/react-datepicker.css';
+// import 'react-datepicker/dist/react-datepicker.css';
 
 /**
  * A "typeahead", an auto-completing text input
@@ -239,7 +240,7 @@ class Typeahead extends Component {
   }
 
   _handleDateChange( date ) {
-    this.props.onOptionSelected( date.format( 'YYYY-MM-DD' ));
+    this.props.onOptionSelected( date.format( 'lll' ));
   }
 
   _showDatePicker() {
@@ -275,13 +276,12 @@ class Typeahead extends Component {
           className={ classList }
           onFocus={ this._onFocus }
         >
-          <DatePicker
-            showYearDropdown
+          <Datetime
             ref="datepicker"
-            dateFormat={ "YYYY-MM-DD" }
-            selected={ moment() }
-            onChange={ this._handleDateChange }
-            onKeyDown={ this._onKeyDown }
+            dateFormat={ "ll" }
+            defaultValue={ moment() }
+            onBlur={ this._handleDateChange }
+            open={ this.state.focused }
           />
         </span>
       );

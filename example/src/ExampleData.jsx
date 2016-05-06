@@ -1,6 +1,6 @@
 import Taffy from 'taffy';
 import faker from 'faker';
-
+import moment from 'moment';
 /*******************************************************************************
  * WARNING: DO NOT DO WHAT THIS FILE DOES
  * You should NOT put all of your data in a local file like this.
@@ -117,7 +117,8 @@ var ExampleData = {
 
     // Filter IPO
     else if (filter.category == "IPO") {
-      var year = filter.value.substring(0, 4);
+      var year = moment( filter.value, 'lll' ).year();
+      console.log( year );
       if (filter.operator == "==") {
     filteredData = filteredData.filter({IPO:{'==':year}});
       } else if (filter.operator == "!=") {

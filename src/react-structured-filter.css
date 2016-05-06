@@ -114,3 +114,15 @@
   background-color: #00f;
   color: #fff;
 }
+
+.filter-tokenizer .rdt{
+  position: absolute;
+}
+
+.filter-tokenizer .rdtDay{
+  cursor: pointer;
+}
+
+.filter-tokenizer .rdtDay:hover{
+  background: #EEE;
+}
