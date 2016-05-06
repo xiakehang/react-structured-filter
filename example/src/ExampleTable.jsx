@@ -74,12 +74,12 @@ var ExampleTable = React.createClass({
             {
               category: 'Industry',
               operator: '==',
-              value: 'Books',
+              value: 'Music',
             },
             {
               category: 'IPO',
-              operator: '<',
-              value: 'Dec 12, 1990 12:00 AM',
+              operator: '>',
+              value: 'Dec 8, 1980 10:50 PM',
             },
           ]}
         />
