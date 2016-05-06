@@ -53,8 +53,8 @@ Example:
       },
       {
         category: 'IPO',
-        operator: '<',
-        value: '1999-12-31',
+        operator: '>',
+        value: 'Dec 8, 1980 10:50 PM',
       },
       {
         category: 'Name',
@@ -107,7 +107,7 @@ An array of structures with the components `category` and `type`
   * _number_: Arbitrary text for the value. No autocomplete options.
     Operator choices will be: `==`, `!=`, `<`, `<=`, `>`, `>=`.
   * _date_: Shows a calendar and the input must be of the form
-    `YYYY-MM-DD`. Operator choices will be: `==`, `!=`, `<`, `<=`, `>`,
+    `MMM D, YYYY H:mm A`. Operator choices will be: `==`, `!=`, `<`, `<=`, `>`,
     `>=`.
 
 Example:
