@@ -9,7 +9,6 @@ import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 import moment from 'moment';
 import fuzzy from 'fuzzy';
-// import DatePicker from 'react-datepicker';
 import Datetime from 'react-datetime';
 import 'react-datetime/css/react-datetime.css';
 import listensToClickOutside from 'react-onclickoutside/decorator';
@@ -17,7 +16,6 @@ import listensToClickOutside from 'react-onclickoutside/decorator';
 import TypeaheadSelector from './selector';
 import KeyEvent from '../keyevent';
 
-// import 'react-datepicker/dist/react-datepicker.css';
 
 /**
  * A "typeahead", an auto-completing text input
