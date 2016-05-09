@@ -227,11 +227,14 @@ export default class Tokenizer extends Component {
     return 'Value';
   }
 
-  _getCategoryType() {
+  _getCategoryType( category ) {
     let categoryType;
-
+    let cat = category;
+    if ( !category || category === '' ) {
+      cat = this.state.category;
+    }
     for ( let i = 0; i < this.props.options.length; i++ ) {
-      if ( this.props.options[ i ].category === this.state.category ) {
+      if ( this.props.options[ i ].category === cat ) {
         categoryType = this.props.options[ i ].type;
         return categoryType;
       }
@@ -267,9 +270,16 @@ export default class Tokenizer extends Component {
         if ( !this.state.selected.length ) {
           return;
         }
+        const lastSelected = JSON.parse(
+          JSON.stringify( this.state.selected[ this.state.selected.length - 1 ])
+        );
         this._removeTokenForValue(
           this.state.selected[ this.state.selected.length - 1 ]
         );
+        this.setState({ category: lastSelected.category, operator: lastSelected.operator });
+        if ( this._getCategoryType( lastSelected.category ) !== 'textoptions' ) {
+          this.refs.typeahead.refs.inner.setEntryText( lastSelected.value );
+        }
       }
       event.preventDefault();
     }
