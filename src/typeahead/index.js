@@ -240,7 +240,9 @@ class Typeahead extends Component {
   }
 
   _handleDateChange( date ) {
-    this.props.onOptionSelected( date.format( 'lll' ));
+    let newDate = moment( date, 'lll' );
+    if ( !newDate.isValid()) newDate = moment();
+    this.props.onOptionSelected( newDate.format( 'lll' ));
   }
 
   _showDatePicker() {
