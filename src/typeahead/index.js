@@ -270,6 +270,8 @@ class Typeahead extends Component {
     const classList = classNames( classes );
 
     if ( this._showDatePicker()) {
+      let defaultDate = moment( this.state.entryValue, 'lll' );
+      if ( !defaultDate.isValid()) defaultDate = moment();
       return (
         <span
           ref="input"
@@ -279,7 +281,7 @@ class Typeahead extends Component {
           <Datetime
             ref="datepicker"
             dateFormat={ "ll" }
-            defaultValue={ moment() }
+            defaultValue={ defaultDate }
             onBlur={ this._handleDateChange }
             open={ this.state.focused }
           />
