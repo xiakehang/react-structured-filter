@@ -149,14 +149,10 @@ export default class Tokenizer extends Component {
     placeholder: PropTypes.string,
 
     /**
-     * Event handler triggered whenever a token is removed. Params: `(removedToken)`
+     * Event handler triggered whenever the filter is changed and a token
+     * is added or removed. Params: `(filter)`
      */
-    onTokenRemove: PropTypes.func,
-
-    /**
-     * Event handler triggered whenever a token is added. Params: `(addedToken)`
-     */
-    onTokenAdd: PropTypes.func,
+    onChange: PropTypes.func,
   }
 
   static defaultProps = {
@@ -165,8 +161,7 @@ export default class Tokenizer extends Component {
     options: [],
     customClasses: {},
     placeholder: '',
-    onTokenAdd() {},
-    onTokenRemove() {},
+    onChange() {},
   }
 
   constructor( ...args ) {
@@ -184,7 +179,7 @@ export default class Tokenizer extends Component {
   }
 
   componentDidMount() {
-    this.props.onTokenAdd( this.state.selected );
+    this.props.onChange( this.state.selected );
   }
 
   componentWillReceiveProps( nextProps ) {
@@ -328,7 +323,7 @@ export default class Tokenizer extends Component {
 
     this.state.selected.splice( index, 1 );
     this.setState({ selected: this.state.selected });
-    this.props.onTokenRemove( this.state.selected );
+    this.props.onChange( this.state.selected );
 
     return;
   }
@@ -355,7 +350,7 @@ export default class Tokenizer extends Component {
     this.state.selected.push( newValue );
     this.setState({ selected: this.state.selected });
     this.refs.typeahead.refs.inner.setEntryText( '' );
-    this.props.onTokenAdd( this.state.selected );
+    this.props.onChange( this.state.selected );
 
     this.setState({
       category: '',

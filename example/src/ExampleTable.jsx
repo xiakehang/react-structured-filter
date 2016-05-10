@@ -79,8 +79,7 @@ var ExampleTable = React.createClass({
             results: "filter-tokenizer-list__container",
             listItem: "filter-tokenizer-list__item"
           }}
-          onTokenAdd={this.updateFilter}
-          onTokenRemove={this.updateFilter}
+          onChange={this.updateFilter}
           value={this.state.filter}
         />
         <GriddleWithCallback
