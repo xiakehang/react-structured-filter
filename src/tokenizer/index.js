@@ -90,8 +90,9 @@ export default class Tokenizer extends Component {
     customClasses: PropTypes.object,
 
     /**
-     * A set of values of tokens to be loaded on first render. Each token should
-     * be an object with a `category`, `operator`, and `value` key.
+     * **Uncontrolled Component:** A default set of values of tokens to be
+     * loaded on first render. Each token should be an object with a
+     * `category`, `operator`, and `value` key.
      *
      * Example:
      *
@@ -113,13 +114,34 @@ export default class Tokenizer extends Component {
      *       },
      *     ]
      */
-    defaultSelected: PropTypes.array,
+    defaultValue: PropTypes.array,
 
     /**
-     * A default value used when the component has no value. If it matches any
-     * options a option list will show.
+     * **Controlled Component:** A set of values of tokens to be loaded on
+     * each render. Each token should be an object with a `category`,
+     * `operator`, and `value` key.
+     *
+     * Example:
+     *
+     *     [
+     *       {
+     *         category: 'Industry',
+     *         operator: '==',
+     *         value: 'Books',
+     *       },
+     *       {
+     *         category: 'IPO',
+     *         operator: '>',
+     *         value: 'Dec 8, 1980 10:50 PM',
+     *       },
+     *       {
+     *         category: 'Name',
+     *         operator: 'contains',
+     *         value: 'Nabokov',
+     *       },
+     *     ]
      */
-    defaultValue: PropTypes.string,
+    value: PropTypes.array,
 
     /**
      * Placeholder text for the typeahead input.
@@ -138,10 +160,10 @@ export default class Tokenizer extends Component {
   }
 
   static defaultProps = {
+    // value: [],
+    // defaultValue: [],
     options: [],
-    defaultSelected: [],
     customClasses: {},
-    defaultValue: '',
     placeholder: '',
     onTokenAdd() {},
     onTokenRemove() {},
@@ -156,13 +178,26 @@ export default class Tokenizer extends Component {
   }
 
   state = {
-    selected: this.props.defaultSelected.slice( 0 ),
+    selected: this.getStateFromProps( this.props ),
     category: '',
     operator: '',
   }
 
   componentDidMount() {
     this.props.onTokenAdd( this.state.selected );
+  }
+
+  componentWillReceiveProps( nextProps ) {
+    let update = {};
+    if ( nextProps.value !== this.props.value ) {
+      update = this.getStateFromProps( nextProps );
+    }
+    this.setState( update );
+  }
+
+  getStateFromProps( props ) {
+    const value = props.value || props.defaultValue;
+    return value;
   }
 
   _renderTokens() {
@@ -361,7 +396,6 @@ export default class Tokenizer extends Component {
               options={ this._getOptionsForTypeahead() }
               header={ this._getHeader() }
               datatype={ this._getInputType() }
-              defaultValue={ this.props.defaultValue }
               onOptionSelected={ this._addTokenForValue }
               onKeyDown={ this._onKeyDown }
             />
