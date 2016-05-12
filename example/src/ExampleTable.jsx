@@ -10,7 +10,18 @@ var ExampleData = require('./ExampleData');
 var ExampleTable = React.createClass({
   getInitialState: function() {
     return {
-      filter: "",
+      filter: [
+            {
+              category: 'Industry',
+              operator: '==',
+              value: 'Music',
+            },
+            {
+              category: 'IPO',
+              operator: '>',
+              value: 'Dec 8, 1980 10:50 PM',
+            },
+          ],
     }
   },
 
@@ -32,7 +43,7 @@ var ExampleTable = React.createClass({
 
   updateFilter: function(filter){
     // Set our filter to json data of the current filter tokens
-    this.setState({filter: JSON.stringify(filter)});
+    this.setState({filter: filter});
   },
 
 
@@ -68,23 +79,11 @@ var ExampleTable = React.createClass({
             results: "filter-tokenizer-list__container",
             listItem: "filter-tokenizer-list__item"
           }}
-          onTokenAdd={this.updateFilter}
-          onTokenRemove={this.updateFilter}
-          defaultSelected={[
-            {
-              category: 'Industry',
-              operator: '==',
-              value: 'Music',
-            },
-            {
-              category: 'IPO',
-              operator: '>',
-              value: 'Dec 8, 1980 10:50 PM',
-            },
-          ]}
+          onChange={this.updateFilter}
+          value={this.state.filter}
         />
         <GriddleWithCallback
-          getExternalResults={this.getJsonData} filter={this.state.filter}
+          getExternalResults={this.getJsonData} filter={JSON.stringify(this.state.filter)}
           resultsPerPage={10}
         />
       </div>

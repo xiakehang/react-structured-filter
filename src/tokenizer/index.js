@@ -90,8 +90,9 @@ export default class Tokenizer extends Component {
     customClasses: PropTypes.object,
 
     /**
-     * A set of values of tokens to be loaded on first render. Each token should
-     * be an object with a `category`, `operator`, and `value` key.
+     * **Uncontrolled Component:** A default set of values of tokens to be
+     * loaded on first render. Each token should be an object with a
+     * `category`, `operator`, and `value` key.
      *
      * Example:
      *
@@ -113,13 +114,34 @@ export default class Tokenizer extends Component {
      *       },
      *     ]
      */
-    defaultSelected: PropTypes.array,
+    defaultValue: PropTypes.array,
 
     /**
-     * A default value used when the component has no value. If it matches any
-     * options a option list will show.
+     * **Controlled Component:** A set of values of tokens to be loaded on
+     * each render. Each token should be an object with a `category`,
+     * `operator`, and `value` key.
+     *
+     * Example:
+     *
+     *     [
+     *       {
+     *         category: 'Industry',
+     *         operator: '==',
+     *         value: 'Books',
+     *       },
+     *       {
+     *         category: 'IPO',
+     *         operator: '>',
+     *         value: 'Dec 8, 1980 10:50 PM',
+     *       },
+     *       {
+     *         category: 'Name',
+     *         operator: 'contains',
+     *         value: 'Nabokov',
+     *       },
+     *     ]
      */
-    defaultValue: PropTypes.string,
+    value: PropTypes.array,
 
     /**
      * Placeholder text for the typeahead input.
@@ -127,24 +149,19 @@ export default class Tokenizer extends Component {
     placeholder: PropTypes.string,
 
     /**
-     * Event handler triggered whenever a token is removed. Params: `(removedToken)`
+     * Event handler triggered whenever the filter is changed and a token
+     * is added or removed. Params: `(filter)`
      */
-    onTokenRemove: PropTypes.func,
-
-    /**
-     * Event handler triggered whenever a token is added. Params: `(addedToken)`
-     */
-    onTokenAdd: PropTypes.func,
+    onChange: PropTypes.func,
   }
 
   static defaultProps = {
+    // value: [],
+    // defaultValue: [],
     options: [],
-    defaultSelected: [],
     customClasses: {},
-    defaultValue: '',
     placeholder: '',
-    onTokenAdd() {},
-    onTokenRemove() {},
+    onChange() {},
   }
 
   constructor( ...args ) {
@@ -156,13 +173,26 @@ export default class Tokenizer extends Component {
   }
 
   state = {
-    selected: this.props.defaultSelected.slice( 0 ),
+    selected: this.getStateFromProps( this.props ),
     category: '',
     operator: '',
   }
 
   componentDidMount() {
-    this.props.onTokenAdd( this.state.selected );
+    this.props.onChange( this.state.selected );
+  }
+
+  componentWillReceiveProps( nextProps ) {
+    let update = {};
+    if ( nextProps.value !== this.props.value ) {
+      update = this.getStateFromProps( nextProps );
+    }
+    this.setState( update );
+  }
+
+  getStateFromProps( props ) {
+    const value = props.value.slice( 0 ) || props.defaultValue.slice( 0 );
+    return value;
   }
 
   _renderTokens() {
@@ -293,7 +323,7 @@ export default class Tokenizer extends Component {
 
     this.state.selected.splice( index, 1 );
     this.setState({ selected: this.state.selected });
-    this.props.onTokenRemove( this.state.selected );
+    this.props.onChange( this.state.selected );
 
     return;
   }
@@ -320,7 +350,7 @@ export default class Tokenizer extends Component {
     this.state.selected.push( newValue );
     this.setState({ selected: this.state.selected });
     this.refs.typeahead.refs.inner.setEntryText( '' );
-    this.props.onTokenAdd( this.state.selected );
+    this.props.onChange( this.state.selected );
 
     this.setState({
       category: '',
@@ -361,7 +391,6 @@ export default class Tokenizer extends Component {
               options={ this._getOptionsForTypeahead() }
               header={ this._getHeader() }
               datatype={ this._getInputType() }
-              defaultValue={ this.props.defaultValue }
               onOptionSelected={ this._addTokenForValue }
               onKeyDown={ this._onKeyDown }
             />
