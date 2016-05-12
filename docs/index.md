@@ -38,10 +38,11 @@ type: `object`
 defaultValue: `{}`  
 
 
-### `defaultSelected`
+### `defaultValue`
 
-A set of values of tokens to be loaded on first render. Each token should
-be an object with a `category`, `operator`, and `value` key.
+**Uncontrolled Component:** A default set of values of tokens to be
+loaded on first render. Each token should be an object with a
+`category`, `operator`, and `value` key.
 
 Example:
 
@@ -64,29 +65,12 @@ Example:
     ]
 
 type: `array`  
-defaultValue: `[]`  
 
 
-### `defaultValue`
+### `onChange`
 
-A default value used when the component has no value. If it matches any
-options a option list will show.
-
-type: `string`  
-defaultValue: `''`  
-
-
-### `onTokenAdd`
-
-Event handler triggered whenever a token is added. Params: `(addedToken)`
-
-type: `func`  
-defaultValue: `function() {}`  
-
-
-### `onTokenRemove`
-
-Event handler triggered whenever a token is removed. Params: `(removedToken)`
+Event handler triggered whenever the filter is changed and a token
+is added or removed. Params: `(filter)`
 
 type: `func`  
 defaultValue: `function() {}`  
@@ -146,4 +130,33 @@ Placeholder text for the typeahead input.
 
 type: `string`  
 defaultValue: `''`  
+
+
+### `value`
+
+**Controlled Component:** A set of values of tokens to be loaded on
+each render. Each token should be an object with a `category`,
+`operator`, and `value` key.
+
+Example:
+
+    [
+      {
+        category: 'Industry',
+        operator: '==',
+        value: 'Books',
+      },
+      {
+        category: 'IPO',
+        operator: '>',
+        value: 'Dec 8, 1980 10:50 PM',
+      },
+      {
+        category: 'Name',
+        operator: 'contains',
+        value: 'Nabokov',
+      },
+    ]
+
+type: `array`  
 
