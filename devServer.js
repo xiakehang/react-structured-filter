@@ -6,6 +6,8 @@ const config = require( './webpack.config.dev' );
 const app = express();
 const compiler = webpack( config );
 
+const port = process.env.PORT || 8000;
+
 app.use( require( 'webpack-dev-middleware' )( compiler, {
   noInfo: true,
   publicPath: config.output.publicPath,
@@ -17,11 +19,11 @@ app.get( '*', function serveStatic( req, res ) {
   res.sendFile( path.join( __dirname, 'example/src/index.html' ));
 });
 
-app.listen( 8000, 'localhost', function useLocalhost( err ) {
+app.listen( port, 'localhost', function useLocalhost( err ) {
   if ( err ) {
     console.log( err );
     return;
   }
 
-  console.log( 'Listening at http://localhost:8000' );
+  console.log( `Listening at http://localhost:${port}` );
 });
