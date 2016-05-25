@@ -1,5 +1,7 @@
 .filter-tokenizer {
   width:100%;
+
+  background: #fff;
   border: 1px solid #ccc;
   border-radius: 5px;
   padding:10px;
@@ -26,23 +28,36 @@
   display: block;
   float:left;
 
-  background-color: #e8e8e8;
-  background-image: linear-gradient(
-      #f0f0f0, #e0e0e0
-    );
+  background-color: #eee;
   border: 1px solid #ccc;
   border-radius: 2px;
 
   margin:3px;
   padding:5px;
-
-  font-weight:bold;
 }
 
+.filter-tokenizer .typeahead-token-close{
+  float: right;
+  font-size: 17px;
+  font-weight: bold;
+  line-height: 1;
+  color: #000;
+  text-shadow: 0 1px 0 #fff;
+  filter: alpha(opacity=30);
+  opacity: .3;
+  margin-left: 0.5em;
+}
+
+.filter-tokenizer .typeahead-token-close:focus,
+.filter-tokenizer .typeahead-token-close:hover {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+  filter: alpha(opacity=60);
+  opacity: .6;
+}
 
 .filter-input-group {
-  border: 0px;
-  border-radius: 2px;
 
   overflow:auto;
   display:block;
@@ -75,27 +90,21 @@
   list-style: none;
   margin: 0px;
   padding: 0px;
-  background-color:#f8f8f8;
-  border: 1px solid #222;
+  background-color:#fff;
+  border: 1px solid #999;
   width:200px;
   max-height:200px;
   overflow-y:auto;
 
-  box-shadow: 5px 5px 5px #888888;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.33);
 }
 
 .filter-tokenizer ul.typeahead-selector li {
   z-index:9999;
   border-bottom: 1px solid #ccc;
-  background-image: linear-gradient(
-      #ffffff, #f0f0f0
-    );
 }
 
 .filter-tokenizer ul.typeahead-selector li.header {
-  background-image: none;
-  background-color: #B0B0B0;
-  color: #ffffff;
   font-weight: bold;
   padding:5px;
 }
@@ -106,13 +115,13 @@
   padding:5px;
   width:100%;
   display:block;
+  border-bottom: 0;
 }
 
 .filter-tokenizer ul.typeahead-selector li a:hover,
 .filter-tokenizer ul.typeahead-selector .hover a {
   text-decoration: none;
-  background-color: #00f;
-  color: #fff;
+  background-color: #eee;
 }
 
 .filter-tokenizer .rdt{
@@ -124,5 +133,5 @@
 }
 
 .filter-tokenizer .rdtDay:hover{
-  background: #EEE;
+  background: #eee;
 }
