@@ -36,6 +36,15 @@
   padding:5px;
 }
 
+.filter-tokenizer .token-operator {
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+
+.filter-tokenizer .token-value {
+  font-weight: bold;
+}
+
 .filter-tokenizer .typeahead-token-close{
   float: right;
   font-size: 17px;

@@ -37,7 +37,9 @@ export default class Token extends Component {
     const { category, operator, value } = this.props.children;
     return (
       <div {...this.props} className="typeahead-token">
-        { category } { operator } "{ value }"
+        <span className="token-category">{ category }</span>
+        <span className="token-operator">{ operator }</span>
+        <span className="token-value">{ value }</span>
         { this._makeCloseButton() }
       </div>
     );
