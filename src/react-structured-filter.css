@@ -40,8 +40,9 @@
   float: right;
   font-size: 17px;
   font-weight: bold;
-  line-height: 1;
+  line-height: 14px;
   color: #000;
+  text-decoration: none;
   text-shadow: 0 1px 0 #fff;
   filter: alpha(opacity=30);
   opacity: .3;
@@ -112,6 +113,7 @@
 
 .filter-tokenizer ul.typeahead-selector li a {
   color: #000;
+  text-decoration: none;
   padding:5px;
   width:100%;
   display:block;
