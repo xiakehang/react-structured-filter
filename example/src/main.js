@@ -3,26 +3,28 @@ var ReactDOM = require('react-dom');
 var ExampleTable = require('./ExampleTable');
 
 require( './css/griddle.css' );
-require( './css/style.css' );
 
 ReactDOM.render(
-  <div className="container">
-
-    <div className="navbar navbar-default">
-      <div className="container-fluid">
+  <div>
+    <div className="navbar navbar-default navbar-static-top">
+      <div className="container">
         <div className="navbar-header">
           <a className="navbar-brand" href="/">react-structured-filter demo</a>
         </div>
       </div>
     </div>
 
-    <div className="panel panel-default">
-      <div className="panel-body">
-        <h2>Example stock data</h2>
-        <ExampleTable/>
-        <hr/>
-        <p><a href="http://summitroute.github.io/react-structured-filter/">Documentation</a></p>
+    <div className="container">
+      <div className="panel panel-default">
+        <div className="panel-heading">
+          <h3 className="panel-title">Example stock data</h3>
+        </div>
+        <div className="panel-body">
+          <ExampleTable/>
+          <hr/>
+          <p><a href="https://github.com/joshcarr/react-structured-filter/blob/master/docs/index.md">Documentation</a></p>
 
+        </div>
       </div>
     </div>
   </div>

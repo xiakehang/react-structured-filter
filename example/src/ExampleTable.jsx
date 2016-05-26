@@ -64,7 +64,7 @@ var ExampleTable = React.createClass({
     return (
       <div>
         <StructuredFilter
-          placeholder=""
+          placeholder="Filter data..."
           options={[
             {category:"Symbol", type:"textoptions", options:this.getSymbolOptions},
             {category:"Name",type:"text"},
