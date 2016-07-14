@@ -183,9 +183,9 @@ export default class Tokenizer extends Component {
   }
 
   componentWillReceiveProps( nextProps ) {
-    let update = {};
+    const update = {};
     if ( nextProps.value !== this.props.value ) {
-      update = this.getStateFromProps( nextProps );
+      update.selected = this.getStateFromProps( nextProps );
     }
     this.setState( update );
   }
