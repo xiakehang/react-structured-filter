@@ -191,8 +191,8 @@ export default class Tokenizer extends Component {
   }
 
   getStateFromProps( props ) {
-    const value = props.value.slice( 0 ) || props.defaultValue.slice( 0 );
-    return value;
+    const value = props.value || props.defaultValue || [];
+    return value.slice( 0 );
   }
 
   _renderTokens() {
