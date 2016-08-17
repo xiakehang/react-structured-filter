@@ -36,7 +36,7 @@ export default class Token extends Component {
   render() {
     const { category, operator, value } = this.props.children;
     return (
-      <div {...this.props} className="typeahead-token">
+      <div className="typeahead-token">
         <span className="token-category">{ category }</span>
         <span className="token-operator">{ operator }</span>
         <span className="token-value">{ value }</span>
