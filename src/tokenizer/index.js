@@ -8,7 +8,7 @@ import Token from './token';
 import KeyEvent from '../keyevent';
 import Typeahead from '../typeahead';
 import classNames from 'classnames';
-import objectAssign from "object-assign";
+import objectAssign from 'object-assign';
 
 /**
  * A typeahead that, when an option is selected, instead of simply filling
@@ -156,9 +156,9 @@ export default class Tokenizer extends Component {
     onChange: PropTypes.func,
     /**
      * A mapping of datatypes to operators.
-     * Resolved by merging with default operators.  
+     * Resolved by merging with default operators.
      * Example:
-     * 
+     *
      * ```javascript
      * {
      *    "textoptions":["equals","does not equal"],
@@ -166,7 +166,7 @@ export default class Tokenizer extends Component {
      * }
      * ```
      */
-    operators:PropTypes.object,
+    operators: PropTypes.object,
   }
 
   static defaultProps = {
@@ -176,11 +176,11 @@ export default class Tokenizer extends Component {
     customClasses: {},
     placeholder: '',
     onChange() {},
-    operators:{
-      textoptions:[`==`, `!=`],
-      text:[`==`, `!=`, `contains`, `!contains`],
-      number:[`==`, `!=`, `<`, `<=`, `>`, `>=`],
-      date:[`==`, `!=`, `<`, `<=`, `>`,`>=`]
+    operators: {
+      textoptions: [ `==`, `!=` ],
+      text: [ `==`, `!=`, `contains`, `!contains` ],
+      number: [ `==`, `!=`, `<`, `<=`, `>`, `>=` ],
+      date: [ `==`, `!=`, `<`, `<=`, `>`, `>=` ],
     },
   }
 
@@ -248,18 +248,18 @@ export default class Tokenizer extends Component {
     } else if ( this.state.operator === '' ) {
       categoryType = this._getCategoryType();
 
-      const operators = objectAssign({},Tokenizer.defaultProps.operators,this.props.operators);
-      switch(categoryType){
-        case "text": return operators.text;
-        case "textoptions": return operators.textoptions;
-        case "date": return operators.date;
-        case "number": return operators.number;
+      const operators = objectAssign({}, Tokenizer.defaultProps.operators, this.props.operators );
+      switch ( categoryType ) {
+        case 'text': return operators.text;
+        case 'textoptions': return operators.textoptions;
+        case 'date': return operators.date;
+        case 'number': return operators.number;
         default:
           /* eslint-disable no-console */
           console.warn( `WARNING: Unknown category type in tokenizer: "${categoryType}"` );
           /* eslint-enable no-console */
           return [];
-      }; 
+      }
     }
     const options = this._getCategoryOptions();
     if ( options === null || options === undefined ) return [];
