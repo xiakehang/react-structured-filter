@@ -1,6 +1,6 @@
 {
   "name": "react-structured-filter",
-  "version": "4.3.2",
+  "version": "4.4.0",
   "description": "React component that provides autocomplete faceted search queries",
   "main": "lib/main.js",
   "author": "Josh Carr",
@@ -15,7 +15,7 @@
     "moment": "*",
     "react-datetime": "^2.1.0",
     "react-onclickoutside": "^4.9.0",
-    "object-assign":"^3.0.0"
+    "object-assign": "^3.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.7.5",
