@@ -76,6 +76,28 @@ type: `func`
 defaultValue: `function() {}`  
 
 
+### `operators`
+
+A mapping of datatypes to operators.
+Resolved by merging with default operators.
+Example:
+
+```javascript
+{
+   "textoptions":["equals","does not equal"],
+   "text":["like","not like","equals","does not equal","matches","does not match"]
+}
+```
+
+type: `object`  
+defaultValue: `{
+  textoptions: [ `==`, `!=` ],
+  text: [ `==`, `!=`, `contains`, `!contains` ],
+  number: [ `==`, `!=`, `<`, `<=`, `>`, `>=` ],
+  date: [ `==`, `!=`, `<`, `<=`, `>`, `>=` ],
+}`  
+
+
 ### `options`
 
 An array of structures with the components `category` and `type`
