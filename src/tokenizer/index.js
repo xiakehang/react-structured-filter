@@ -1,9 +1,9 @@
 import {
   default as React,
   Component,
-  PropTypes,
 } from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 import Token from './token';
 import KeyEvent from '../keyevent';
 import Typeahead from '../typeahead';
