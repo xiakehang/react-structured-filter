@@ -41,7 +41,7 @@
     "less": "^2.6.0",
     "less-loader": "^2.2.1",
     "react": "^0.14.0",
-    "react-docgen": "^2.8.2",
+    "react-docgen": "^2.19.0",
     "react-dom": "^0.14.0",
     "react-transform-catch-errors": "^1.0.2",
     "react-transform-hmr": "^1.0.2",
