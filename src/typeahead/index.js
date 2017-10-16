@@ -3,9 +3,9 @@
 import {
   default as React,
   Component,
-  PropTypes,
 } from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import moment from 'moment';
 import fuzzy from 'fuzzy';
