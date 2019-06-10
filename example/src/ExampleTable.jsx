@@ -7,87 +7,88 @@ require('../../src/react-structured-filter.css');
 
 var ExampleData = require('./ExampleData');
 
-var ExampleTable = React.createClass({
-  getInitialState: function() {
-    return {
-      filter: [
-            {
-              category: 'Industry',
-              operator: '==',
-              value: 'Music',
-            },
-            {
-              category: 'IPO',
-              operator: '>',
-              value: 'Dec 8, 1980 10:50 PM',
-            },
-          ],
-    }
-  },
+class ExampleTable extends React.Component {
 
+  state = {
+    filter: [
+      {
+        category: 'Industry',
+        operator: '==',
+        value: 'Music',
+      },
+      {
+        category: 'IPO',
+        operator: '>',
+        value: 'Dec 8, 1980 10:50 PM',
+      },
+    ],
+  };
 
-  getJsonData: function(filterString, sortColumn, sortAscending, page, pageSize, callback) {
+  getJsonData(filterString, sortColumn, sortAscending, page, pageSize, callback) {
 
-    if (filterString==undefined) {
+    if (filterString == undefined) {
       filterString = "";
     }
-    if (sortColumn==undefined) {
+    if (sortColumn == undefined) {
       sortColumn = "";
     }
 
     // Normally you would make a Reqwest here to the server
     var results = ExampleData.filter(filterString, sortColumn, sortAscending, page, pageSize);
     callback(results);
-  },
+  }
 
 
-  updateFilter: function(filter){
+  updateFilter(filter) {
     // Set our filter to json data of the current filter tokens
-    this.setState({filter: filter});
-  },
+    this.setState({ filter: filter });
+  }
 
 
-  getSymbolOptions: function() {
+  getSymbolOptions() {
     return ExampleData.getSymbolOptions();
-  },
+  }
 
-  getSectorOptions: function() {
+  getSectorOptions() {
     return ExampleData.getSectorOptions();
-  },
+  }
 
-  getIndustryOptions: function() {
+  getIndustryOptions() {
     return ExampleData.getIndustryOptions();
-  },
+  }
 
 
-  render: function(){
+  render() {
     return (
       <div>
         <StructuredFilter
           placeholder="Filter data..."
           options={[
-            {category:"Symbol", type:"textoptions", options:this.getSymbolOptions},
-            {category:"Name",type:"text"},
-            {category:"Price",type:"number"},
-            {category:"MarketCap",type:"number"},
-            {category:"IPO", type:"date"},
-            {category:"Sector", type:"textoptions", options:this.getSectorOptions},
-            {category:"Industry", type:"textoptions", options:this.getIndustryOptions}
-            ]}
+            { category: "Symbol", type: "textoptions", options: this.getSymbolOptions },
+            { category: "Name", type: "text" },
+            { category: "Price", type: "number" },
+            { category: "MarketCap", type: "number" },
+            { category: "IPO", type: "date" },
+            { category: "Sector", type: "textoptions", options: this.getSectorOptions },
+            { category: "Industry", type: "textoptions", options: this.getIndustryOptions }
+          ]}
           customClasses={{
             input: "filter-tokenizer-text-input",
             results: "filter-tokenizer-list__container",
             listItem: "filter-tokenizer-list__item"
           }}
-          onChange={this.updateFilter}
+          onChange={this.updateFilter.bind(this)}
           value={this.state.filter}
         />
-        <GriddleWithCallback
-          getExternalResults={this.getJsonData} filter={JSON.stringify(this.state.filter)}
+
+        {/* <GriddleWithCallback
+          getExternalResults={this.getJsonData} filter={this.state.filter}
           resultsPerPage={10}
         />
+        <ExampleData ref="ExampleData" /> */}
+
       </div>
     )
   }
-});
+}
 module.exports = ExampleTable;
