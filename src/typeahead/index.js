@@ -8,7 +8,7 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import moment from 'moment';
-import fuzzy from 'fuzzy';
+// import fuzzy from 'fuzzy';
 import Datetime from 'react-datetime';
 import 'react-datetime/css/react-datetime.css';
 import listensToClickOutside from 'react-onclickoutside';
@@ -84,18 +84,24 @@ class Typeahead extends Component {
       options: nextProps.options,
       header: nextProps.header,
       datatype: nextProps.datatype,
-      visible: nextProps.options,
+      visible: this.getOptionsForValue( null, nextProps.options ),
     });
   }
 
   getOptionsForValue( value, options ) {
-    let result = fuzzy
-      .filter( value, options )
-      .map( res => res.string );
+    // let result = fuzzy
+    //   .filter( value, options )
+    //   .map( res => res.string );
+
+    let result = value === null ?
+      options :
+        options.filter( itm => itm.text.indexOf( value.toLowerCase()) >= 0 );
 
     if ( this.props.maxVisible ) {
       result = result.slice( 0, this.props.maxVisible );
     }
+
+    result = result.map( itm => ({ value: itm.value, text: itm.text }));
     return result;
   }
 

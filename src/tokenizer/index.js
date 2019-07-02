@@ -167,6 +167,8 @@ export default class Tokenizer extends Component {
      * ```
      */
     operators: PropTypes.object,
+
+    defaultProps: PropTypes.object,
   }
 
   static defaultProps = {
@@ -190,6 +192,8 @@ export default class Tokenizer extends Component {
     this._onKeyDown = this._onKeyDown.bind( this );
     this._getOptionsForTypeahead = this._getOptionsForTypeahead.bind( this );
     this._removeTokenForValue = this._removeTokenForValue.bind( this );
+
+    Tokenizer.defaultProps = Object.assign( Tokenizer.defaultProps, this.props.defaultProps );
   }
 
   state = {
@@ -242,7 +246,10 @@ export default class Tokenizer extends Component {
     if ( this.state.category === '' ) {
       const categories = [];
       for ( let i = 0; i < this.props.options.length; i++ ) {
-        categories.push( this.props.options[ i ].category );
+        categories.push({
+          value: this.props.options[ i ].category,
+          text: this.props.options[ i ].categoryText || this.props.options[ i ].category,
+        });
       }
       return categories;
     } else if ( this.state.operator === '' ) {
@@ -250,10 +257,10 @@ export default class Tokenizer extends Component {
 
       const operators = objectAssign({}, Tokenizer.defaultProps.operators, this.props.operators );
       switch ( categoryType ) {
-        case 'text': return operators.text;
-        case 'textoptions': return operators.textoptions;
-        case 'date': return operators.date;
-        case 'number': return operators.number;
+        case 'text': return operators.text.map( itm => ({ value: itm, text: itm }));
+        case 'textoptions': return operators.textoptions.map( itm => ({ value: itm, text: itm }));
+        case 'date': return operators.date.map( itm => ({ value: itm, text: itm }));
+        case 'number': return operators.number.map( itm => ({ value: itm, text: itm }));
         default:
           /* eslint-disable no-console */
           console.warn( `WARNING: Unknown category type in tokenizer: "${categoryType}"` );
@@ -263,7 +270,9 @@ export default class Tokenizer extends Component {
     }
     const options = this._getCategoryOptions();
     if ( options === null || options === undefined ) return [];
-    return options();
+    return options().map( itm => typeof itm === 'object' ?
+      { value: itm.value, text: itm.text } :
+        { value: itm, text: itm });
   }
 
   _getHeader() {

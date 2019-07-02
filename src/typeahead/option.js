@@ -11,7 +11,7 @@ import classNames from 'classnames';
 export default class TypeaheadOption extends Component {
   static propTypes = {
     customClasses: PropTypes.object,
-    result: PropTypes.string,
+    result: PropTypes.object,
     onClick: PropTypes.func,
     children: PropTypes.string,
     hover: PropTypes.bool,
@@ -39,7 +39,7 @@ export default class TypeaheadOption extends Component {
 
   _onClick( event ) {
     event.preventDefault();
-    return this.props.onClick( this.props.result );
+    return this.props.onClick( this.props.result.value );
   }
 
   render() {
@@ -57,7 +57,7 @@ export default class TypeaheadOption extends Component {
           className={ this._getClasses() }
           ref="anchor"
         >
-          { this.props.children }
+          { this.props.children.text }
         </a>
       </li>
     );

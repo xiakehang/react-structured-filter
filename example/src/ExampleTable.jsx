@@ -13,11 +13,13 @@ class ExampleTable extends React.Component {
     filter: [
       {
         category: 'Industry',
+        categoryText: 'Industry',
         operator: '==',
         value: 'Music',
       },
       {
         category: 'IPO',
+        categoryText: 'IPO',
         operator: '>',
         value: 'Dec 8, 1980 10:50 PM',
       },
@@ -64,8 +66,8 @@ class ExampleTable extends React.Component {
         <StructuredFilter
           placeholder="Filter data..."
           options={[
-            { category: "Symbol", type: "textoptions", options: this.getSymbolOptions },
-            { category: "Name", type: "text" },
+            { category: "Symbol", categoryText: "Symbol", type: "textoptions", options: this.getSymbolOptions },
+            { category: "Name", categoryText: "Name", type: "text", options: () => ['aa', 'bb'] },
             { category: "Price", type: "number" },
             { category: "MarketCap", type: "number" },
             { category: "IPO", type: "date" },
@@ -79,6 +81,12 @@ class ExampleTable extends React.Component {
           }}
           onChange={this.updateFilter.bind(this)}
           value={this.state.filter}
+          operators={{
+            textoptions: [`==`, `!=`],
+            text: [`contains`, `!contains`],
+            number: [`==`, `!=`, `<`, `<=`, `>`, `>=`],
+            date: [`==`, `!=`, `<`, `<=`, `>`, `>=`],
+          }}
         />
 
         {/* <GriddleWithCallback
